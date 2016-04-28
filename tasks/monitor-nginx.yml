@@ -1,0 +1,8 @@
+---
+- name: Setup monitor
+  command: sudo bash /opt/spm/bin/spm-client-nginx-setup-conf.sh {{ spm_token }} statusUrl:{{ nginx_stats_url }}
+  when: user is undefined or pass is undefined
+
+- name: Setup monitor
+  command: sudo bash /opt/spm/bin/spm-client-nginx-setup-conf.sh {{ spm_token }} statusUrl:{{ nginx_stats_url }} username:{{ user }} password:{{ pass }}
+  when: user is defined and pass is defined

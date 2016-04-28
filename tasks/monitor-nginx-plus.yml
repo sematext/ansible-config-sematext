@@ -1,0 +1,4 @@
+---
+- name: Setup monitor
+  command: sudo bash /opt/spm/bin/spm-client-nginx-plus-setup-conf.sh {{ spm_token }} statusUrl:{{ nginx_plus_stats_url }}
+  when: user is undefined or pass is undefined

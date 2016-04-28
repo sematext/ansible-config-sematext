@@ -1,0 +1,12 @@
+---
+haproxy_stats_url: http://localhost/haproxy_stats;csv
+java_app_type: jvm
+java_app_subtype:
+java_jvm_name: default
+memcached_port: 11211
+mysql_db_user: spm-user
+mysql_db_pass: spm-password
+mysql_db_host: localhost
+mysql_db_port: 3306
+nginx_stats_url: http://localhost/nginx_status
+nginx_plus_stats_url: http://localhost/status
