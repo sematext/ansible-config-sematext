@@ -12,7 +12,7 @@
 - name: Check SPM Monitor support
   fail:
     msg: "Unsupported monitor type: {{ spm_type }}"
-  when: spm_type not in ['apache', 'haproxy', 'javaagent', 'memcached', 'mysql', 'nginx', 'nginx-plus', 'standalone']
+  when: spm_type not in ['apache', 'haproxy', 'javaagent', 'memcached', 'mysql', 'nginx', 'nginx-plus']
 
 - name: Configure monitor
   include: monitor-{{ spm_type }}.yml

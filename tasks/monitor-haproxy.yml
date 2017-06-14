@@ -1,3 +1,3 @@
 ---
 - name: Setup monitor
-  command: bash /opt/spm/bin/spm-client-haproxy-setup-conf.sh {{ spm_token }} statsUrl:"{{ haproxy_stats_url }}"
+  command: sudo bash /opt/spm/bin/spm-client-haproxy-setup-conf.sh {{ spm_token }} statsUrl:"{{ haproxy_stats_url }}"
