@@ -14,10 +14,13 @@ MySQL:
 - hosts: all
   become: yes
   vars:
-    spm_token: SPM_TOKEN
-    spm_type: mysql
-    mysql_db_user: mysql-user
-    mysql_db_pass: mysql-password
+    monitoring_token: MONTIORING_TOKEN
+    infra_token: INFRA_TOKEN
+    agent_type: standalone
+    app_type: mysql
+    args:
+      SPM_MONITOR_MYSQL_DB_USER: mysql-user
+      SPM_MONITOR_MYSQL_DB_PASSWORD: mysql-password
   roles:
     - { role: sematext.spm-monitor-config }
 ```
@@ -27,9 +30,12 @@ Elasticsearch:
 - hosts: all
   become: yes
   vars:
-    spm_token: SPM_TOKEN
-    spm_type: standalone
-    java_app_type: es
+    monitoring_token: MONTIORING_TOKEN
+    infra_token: INFRA_TOKEN
+    agent_type: standalone
+    app_type: elasticsearch
+    args:
+      SPM_MONITOR_ES_NODE_HOSTPORT: 'localhost:9200'
   roles:
     - { role: sematext.spm-monitor-config }
 
@@ -40,10 +46,13 @@ ZooKeeper:
 - hosts: all
   become: yes
   vars:
-    spm_token: SPM_TOKEN
-    spm_type: standalone
-    java_app_type: zk
-    jmx_params: -Dspm.remote.jmx.url=localhost:3000
+    monitoring_token: MONTIORING_TOKEN
+    infra_token: INFRA_TOKEN
+    agent_type: standalone
+    app_type: zookeeper
+    args:
+      jmx_host: localhost
+      jmx_port: 3000
   roles:
     - { role: sematext.spm-monitor-config }
 
@@ -54,13 +63,14 @@ Kafka:
 - hosts: all
   become: yes
   vars:
-    spm_token: SPM_TOKEN
-    spm_type: standalone
-    java_app_type: kafka
+    monitoring_token: MONTIORING_TOKEN
+    infra_token: INFRA_TOKEN
+    agent_type: standalone
+    app_type: kafka
   roles:
-    - { role: sematext.spm-monitor-config, java_app_subtype: kafka-broker, jmx_params: "-Dspm.remote.jmx.url=localhost:3000" }
-    - { role: sematext.spm-monitor-config, java_app_subtype: kafka-producer, jmx_params: "-Dspm.remote.jmx.url=localhost:3001" }
-    - { role: sematext.spm-monitor-config, java_app_subtype: kafka-consumer, jmx_params: "-Dspm.remote.jmx.url=localhost:3002" }
+    - { role: sematext.spm-monitor-config, app_subtype: kafka-broker, args: [jmx_host: 'localhost', jmx_port: 3000]}
+    - { role: sematext.spm-monitor-config, app_subtype: kafka-producer, args: [jmx_host: 'localhost', jmx_port: 3001]}
+    - { role: sematext.spm-monitor-config, app_subtype: kafka-consumer, args: [jmx_host: 'localhost', jmx_port: 3002]}
 ```
 
 License

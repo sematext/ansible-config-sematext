@@ -1,18 +1,44 @@
 ---
-- name: Check SPM Monitor token
+- name: Check if Monitoring token is defined
   fail:
-    msg: "spm_token is mandatory"
-  when: spm_token is undefined
+    msg: "monitoring_token is mandatory"
+  when: monitoring_token is undefined
 
-- name: Check SPM Monitor type
+- name: Check if Infra token is defined
   fail:
-    msg: "spm_type is mandatory"
-  when: spm_type is undefined
+    msg: "infra_token is mandatory"
+  when: infra_token is undefined
 
-- name: Check SPM Monitor support
+- name: Check if Agent type is defined
   fail:
-    msg: "Unsupported monitor type: {{ spm_type }}"
-  when: spm_type not in ['apache', 'haproxy', 'javaagent', 'memcached', 'mysql', 'nginx', 'nginx-plus', 'standalone']
+    msg: "agent_type is mandatory"
+  when: agent_type is undefined
 
-- name: Configure monitor
-  include: monitor-{{ spm_type }}.yml
+- name: Check if App type is defined
+  fail:
+    msg: "app_type is mandatory"
+  when: app_type is undefined
+
+- name: Initialise extra arguments
+  set_fact:
+    extra_args: ""
+
+- name: Check if App sub-type is defined
+  set_fact:
+    extra_args: "{{ extra_args }} --app-subtype {{ app_subtype }}"
+  whwn: app_subtype is defined
+
+- name: Prepare specific arguments
+  set_fact:
+    extra_args: "{{ extra_args }} --{{item.key}} {{item.value}}"
+  with_dict: "{{ args }}"
+  when: args is defined
+
+- name: Configure monitor without App subtype
+  command: >
+      /opt/spm/bin/setup-sematext
+      --monitoring-token {{ monitoring_token }}
+      --infra-token {{ infra_token }}
+      --agent-type {{ agent_type }}
+      --app-type {{ app_type }}
+      {{ extra_args }}

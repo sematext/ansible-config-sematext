@@ -1,3 +1,0 @@
----
-- name: Setup monitor
-  command: bash /opt/spm/bin/spm-client-apache-setup-conf.sh {{ spm_token }}
