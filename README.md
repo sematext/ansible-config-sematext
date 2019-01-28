@@ -1,7 +1,7 @@
-Ansible Sematext SPM Monitor Configure Role
+Ansible Sematext Infra & App agents Configure Role
 ===========================================
 
-Configure Sematext SPM Monitor.
+Configure Sematext Infra & App agents.
 
 Dependencies
 ------------

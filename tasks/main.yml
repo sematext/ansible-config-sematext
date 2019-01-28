@@ -9,11 +9,6 @@
     msg: "infra_token is mandatory"
   when: infra_token is undefined
 
-- name: Check if Agent type is defined
-  fail:
-    msg: "agent_type is mandatory"
-  when: agent_type is undefined
-
 - name: Check if App type is defined
   fail:
     msg: "app_type is mandatory"
@@ -23,16 +18,16 @@
   set_fact:
     extra_args: ""
 
-- name: Check if App sub-type is defined
+- name: Check if App subtype is defined
   set_fact:
     extra_args: "{{ extra_args }} --app-subtype {{ app_subtype }}"
-  whwn: app_subtype is defined
+  when: app_subtype is defined
 
 - name: Prepare specific arguments
   set_fact:
     extra_args: "{{ extra_args }} --{{ item.key }} {{ item.value }}"
-  with_dict: "{{ args }}"
-  when: args is defined
+  with_dict: "{{ agent_args }}"
+  when: agent_args is defined
 
 - name: Configure monitor without App subtype
   command: >
@@ -42,3 +37,20 @@
       --agent-type {{ agent_type }}
       --app-type {{ app_type }}
       {{ extra_args }}
+  args:
+    creates: "/opt/spm/spm-monitor/conf/spm-monitor-config-\
+      {{ monitoring_token }}-{{ app_name }}.properties"
+  when: app_subtype is not defined
+
+- name: Configure monitor with App subtype
+  command: >
+      /opt/spm/bin/setup-sematext
+      --monitoring-token {{ monitoring_token }}
+      --infra-token {{ infra_token }}
+      --agent-type {{ agent_type }}
+      --app-type {{ app_type }}
+      {{ extra_args }}
+  args:
+    creates: "/opt/spm/spm-monitor/conf/spm-monitor-\
+      {{ app_subtype }}-config-{{ monitoring_token }}-{{ app_name }}.properties"
+  when: app_subtype is defined

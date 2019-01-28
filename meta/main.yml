@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: 'Sematext'
-  description: Configure SPM Monitor
+  description: Configure Sematext Infra & App agents
   license: Apache2
   min_ansible_version: 2.0
   platforms:
