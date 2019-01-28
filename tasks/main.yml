@@ -30,7 +30,7 @@
 
 - name: Prepare specific arguments
   set_fact:
-    extra_args: "{{ extra_args }} --{{item.key}} {{item.value}}"
+    extra_args: "{{ extra_args }} --{{ item.key }} {{ item.value }}"
   with_dict: "{{ args }}"
   when: args is defined
 
