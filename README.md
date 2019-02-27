@@ -14,7 +14,7 @@ MySQL:
 - hosts: all
   become: yes
   vars:
-    monitoring_token: MONTIORING_TOKEN
+    monitoring_token: MONITORING_TOKEN
     infra_token: INFRA_TOKEN
     agent_type: standalone
     app_type: mysql
@@ -30,7 +30,7 @@ Elasticsearch:
 - hosts: all
   become: yes
   vars:
-    monitoring_token: MONTIORING_TOKEN
+    monitoring_token: MONITORING_TOKEN
     infra_token: INFRA_TOKEN
     agent_type: standalone
     app_type: elasticsearch
@@ -46,7 +46,7 @@ ZooKeeper:
 - hosts: all
   become: yes
   vars:
-    monitoring_token: MONTIORING_TOKEN
+    monitoring_token: MONITORING_TOKEN
     infra_token: INFRA_TOKEN
     agent_type: standalone
     app_type: zookeeper
@@ -63,7 +63,7 @@ Kafka:
 - hosts: all
   become: yes
   vars:
-    monitoring_token: MONTIORING_TOKEN
+    monitoring_token: MONITORING_TOKEN
     infra_token: INFRA_TOKEN
     agent_type: standalone
     app_type: kafka
